@@ -1,0 +1,96 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<div id="divListItems" style=border-style:solid>Hi I am here </div>
+
+
+<script>
+      // AJAX CALL 
+
+      $(document).ready(function () {
+            var myListItems;
+
+            getSPListItemkg()
+            
+      });
+
+
+      function getSPListItemkg() {
+            // read list items here - ajax call is made here for the whole entire list - get everything here 
+            var spListItemsUrl = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('TeamMembers')/items?$select=ID,Title"
+
+            $.ajax({
+                  url: spListItemsUrl,
+                  type: "GET",
+                  headers: {
+                        "accept": "application/json;odata=verbose",
+                        "content-type": "application/json;odata=verbose"
+                  },
+                  success: onQuerySucceeded,
+                  error: onQueryFailed
+            })
+
+
+      }
+
+
+      function onQuerySucceeded(data) {
+            alert("sucess");
+            renderInSPDiv()
+             myListItems = data.d.results
+                  console.log("var myList", myListItems)
+                        for (i=0; i<myListItems.length; i++){
+                              console.log("checking data inside forloop", myListItems[i].Title)
+                              createNewDivPerItem()
+                                    // $("#divListItems").html(createNewDivPerItem);
+
+
+
+
+                                                            }
+            
+      }
+
+
+      function onQueryFailed(error) {
+            alert("Error has occured");
+            console.log(error)
+      }
+
+
+      // show detail of article another api call with ID included 
+      function renderInSPDiv() {
+            // use the below code to do another ajax call to show detail on an item that was clicked
+            $("#divListItems").click(function () {
+                  $("#divListItems").css("background-color", "pink");
+
+
+                  // below instead of the string - replace it with the data that is coming from the detail of the specific object that was returned 
+                  $("#divListItems").html(" Did the color change?");
+
+            })
+
+      };
+
+
+
+function createNewDivPerItem (){
+
+      var row = $("<div>");
+      row.addClass("mySisters");
+      row.append ("<p> My beloved sister " + myListItems.Title + "</p>");
+      row.attr("enteryId", myListItems[i].ID)
+      divListItems.append(row);
+      alert(row)
+
+}
+
+
+
+
+
+
+
+
+
+
+
+</script>
