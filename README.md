@@ -1,0 +1,2 @@
+# SharpointRESTAPIGet
+SP get request 
